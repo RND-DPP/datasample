@@ -85,8 +85,8 @@ th{background:#f7faf9;color:#475569;font-size:12px;text-transform:uppercase;lett
   </section>
   <section class="panel">
     <div class="toolbar"><h2>Daftar Barang Sample</h2><input class="search" id="search" type="search" placeholder="Cari sample, supplier, nama, pemohon..."><div class="actions" style="margin:0"><button class="btn-secondary" type="button" id="printBtn">Cetak Laporan</button></div></div>
-    <div class="table-wrap"><table><thead><tr><th>No.</th><th>Tanggal</th><th>Sample</th><th>Supplier</th><th>Nama Barang</th><th>Jumlah</th><th>Permintaan</th><th>Status</th><th>Lokasi</th><th>Aksi</th></tr></thead><tbody id="tableBody"></tbody></table><div class="empty" id="emptyState">Belum ada data sample. Silakan tambahkan data melalui form di atas.</div></div>
-    <p class="footnote">Data disimpan di perangkat/browser ini saja.</p>
+    <div class="table-wrap"><table><thead><tr><th>No.</th><th>Tanggal</th><th>Sample</th><th>Supplier</th><th>Nama Barang</th><th>Jumlah</th><th>Permintaan</th><th>Status</th><th>Lokasi</th><th id="actionHeader">Aksi</th></tr></thead><tbody id="tableBody"></tbody></table><div class="empty" id="emptyState">Belum ada data sample. Silakan tambahkan data melalui form di atas.</div></div>
+    <p class="footnote">Data disimpan di perangkat/browser ini.</p>
   </section>
   <footer class="footer"><span class="love">&hearts;</span> | Created by <strong>RND DPP</strong> &copy; <span id="year"></span> | <span class="love">&hearts;</span></footer>
 </main>
@@ -183,6 +183,8 @@ $("loginForm").addEventListener("submit", event => {
   sessionStorage.setItem(SESSION_KEY, user.id);
   $("loginMessage").textContent = "";
   showApp(user);
+  const isAdmin = user.role === "admin";
+  $("formPanel").hidden = !isAdmin;
 });
 $("logoutBtn").addEventListener("click", logout);
 
@@ -231,6 +233,11 @@ function deleteSample(id) {
   if ($("editId").value === id) resetForm();
 }
 function render() {
+  const isAdmin = currentUser?.role === "admin";
+
+  // Sembunyikan judul kolom Aksi untuk karyawan
+  $("actionHeader").hidden = !isAdmin;
+
   const q = $("search").value.trim().toLowerCase();
   const filtered = samples.filter(s => [s.tanggal,s.nomor,s.kode,s.nama,s.pemohon,s.status,s.pic,s.keterangan].some(v => String(v || "").toLowerCase().includes(q)));
   $("totalData").textContent = samples.length;
@@ -242,16 +249,32 @@ function render() {
     <td>${escapeHtml(s.kode)}</td><td>${escapeHtml(s.nama)}${s.keterangan ? `<br><small style="color:#64748b">${escapeHtml(s.keterangan)}</small>` : ""}</td>
     <td>${escapeHtml(s.jumlah)} ${escapeHtml(s.satuan)}</td><td>${escapeHtml(s.pemohon)}</td>
     <td><span class="pill">${escapeHtml(s.status)}</span></td><td>${escapeHtml(s.pic || "-")}</td>
-    <td><div class="row-actions"><button class="btn-secondary" type="button" data-edit="${escapeHtml(s.id)}">Edit</button><button class="btn-danger" type="button" data-delete="${escapeHtml(s.id)}">Hapus</button></div></td>
+    ${isAdmin ? `<td>
+  <div class="row-actions">
+    <button class="btn-secondary" type="button"
+      data-edit="${escapeHtml(s.id)}">Edit</button>
+    <button class="btn-danger" type="button"
+      data-delete="${escapeHtml(s.id)}">Hapus</button>
+  </div>
+</td>` : ""}
   </tr>`).join("");
   $("emptyState").hidden = filtered.length > 0;
   if (!filtered.length) $("emptyState").textContent = q ? "Data tidak ditemukan." : "Belum ada data sample. Silakan tambahkan data melalui form di atas.";
 }
 $("tableBody").addEventListener("click", event => {
+  // Hanya admin yang boleh menjalankan aksi
+  if (currentUser?.role !== "admin") return;
+
   const editButton = event.target.closest("[data-edit]");
   const deleteButton = event.target.closest("[data-delete]");
-  if (editButton) editSample(editButton.dataset.edit);
-  if (deleteButton) deleteSample(deleteButton.dataset.delete);
+
+  if (editButton) {
+    editSample(editButton.dataset.edit);
+  }
+
+  if (deleteButton) {
+    deleteSample(deleteButton.dataset.delete);
+  }
 });
 
 // Pengelolaan akun admin
@@ -300,6 +323,7 @@ const savedSessionId = sessionStorage.getItem(SESSION_KEY);
 const savedUser = users.find(u => u.id === savedSessionId);
 if (savedUser) showApp(savedUser);
 else { $("loginScreen").hidden = false; $("appShell").hidden = true; }
+const isAdmin = currentUser?.role === "admin";
 </script>
 </body>
 </html>
