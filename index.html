@@ -1,374 +1,309 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BARANG SAMPLE RND PT.DPP</title>
-  <link rel="icon" type="image/png" href="img/Dpp.png">
-  <style>
-    :root {
-      --primary: #176b5b;
-      --primary-dark: #105447;
-      --bg: #f3f6f8;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #dce4e8;
-      --danger: #c0392b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    header {
-      background: linear-gradient(120deg, var(--primary-dark), var(--primary));
-      color: white;
-      padding: 25px max(20px, calc((100% - 1180px) / 2));
-    }
-    header h1 { margin: 0 0 7px; font-size: clamp(23px, 3vw, 31px); }
-    header p { margin: 0; color: #d8f3eb; }
-    main { max-width: 1180px; margin: 25px auto; padding: 0 18px 35px; }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .stat, .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      box-shadow: 0 4px 14px #0f172a08;
-    }
-    .stat { padding: 18px 20px; }
-    .stat span { color: var(--muted); font-size: 13px; }
-    .stat strong { display: block; margin-top: 8px; font-size: 27px; color: var(--primary); }
-    .panel { padding: 22px; margin-bottom: 20px; }
-    .panel h2 { margin: 0 0 18px; font-size: 19px; }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 15px;
-    }
-    .field { display: flex; flex-direction: column; gap: 7px; }
-    .field.full { grid-column: 1 / -1; }
-    label { font-size: 13px; font-weight: 700; color: #334155; }
-    input, select, textarea {
-      width: 100%; border: 1px solid #cbd5e1; border-radius: 8px;
-      padding: 11px 12px; font: inherit; font-size: 14px; background: white;
-      color: var(--text); outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--primary); box-shadow: 0 0 0 3px #176b5b18;
-    }
-    textarea { resize: vertical; min-height: 78px; }
-    .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
-    button {
-      border: 0; border-radius: 8px; padding: 11px 15px; cursor: pointer;
-      font-weight: 700; font-size: 13px; transition: .15s;
-    }
-    button:hover { filter: brightness(.95); }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-secondary { background: #e8eef1; color: #334155; }
-    .btn-danger { background: #fee2e2; color: var(--danger); }
-    .toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; margin-bottom: 15px;
-    }
-    .toolbar h2 { margin: 0; }
-    .search { max-width: 330px; }
-    .table-wrap { overflow-x: auto; }
-    table { border-collapse: collapse; width: 100%; min-width: 900px; font-size: 13px; }
-    th, td { padding: 13px 12px; border-bottom: 1px solid #e8edf0; text-align: left; vertical-align: top; }
-    th { background: #f7faf9; color: #475569; font-size: 12px; text-transform: uppercase; letter-spacing: .3px; }
-    tbody tr:hover { background: #f8fbfa; }
-    .pill { display: inline-block; padding: 5px 8px; border-radius: 20px; background: #d9f3e9; color: #176b5b; font-size: 11px; font-weight: 700; }
-    .row-actions { display: flex; gap: 6px; }
-    .row-actions button { padding: 7px 9px; font-size: 12px; }
-    .empty { text-align: center; padding: 28px; color: var(--muted); }
-    .footnote { color: var(--muted); font-size: 12px; margin: 12px 0 0; }
-    @media (max-width: 760px) {
-      .stats { grid-template-columns: 1fr; gap: 10px; }
-      .stat { padding: 14px 17px; }
-      .stat strong { font-size: 23px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .field.full { grid-column: auto; }
-      .panel { padding: 16px; }
-      .toolbar { align-items: stretch; flex-direction: column; }
-      .search { max-width: none; }
-    }
-    @media print {
-      body { background: white; }
-      header { padding: 15px 0; background: white; color: black; }
-      header p { color: #444; }
-      main { margin: 10px 0; padding: 0; max-width: none; }
-      .stats, #formPanel, .toolbar .search, .toolbar .actions, .row-actions, .footnote { display: none !important; }
-      .panel { box-shadow: none; border: 0; padding: 0; }
-      table { min-width: 0; font-size: 10px; }
-      th, td { padding: 6px; }
-    }
-.footer {
-    text-align: center;
-    padding: 15px;
-    font-size: 14px;
-    color: #666;
-    background-color: #f8f9fa;
-}
-
-.footer strong {
-    color: rgb(245, 32, 227);
-}
-
-.love {
-    display: inline-block;
-    color: rgb(245, 23, 79);
-    font-size: 18px;
-    animation: heartbeat 1s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.3);
-    }
-}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BARANG SAMPLE RND PT.DPP</title>
+<link rel="icon" type="image/png" href="img/Dpp.png">
+<style>
+:root{--primary:#176b5b;--primary-dark:#105447;--bg:#f3f6f8;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#dce4e8;--danger:#c0392b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(120deg,var(--primary-dark),var(--primary));color:white;padding:25px max(20px,calc((100% - 1180px)/2))}
+header h1{margin:0 0 7px;font-size:clamp(23px,3vw,31px)}header p{margin:0;color:#d8f3eb}
+main{max-width:1180px;margin:25px auto;padding:0 18px 35px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.stat,.panel{background:var(--card);border:1px solid var(--border);border-radius:13px;box-shadow:0 4px 14px #0f172a08}
+.stat{padding:18px 20px}.stat span{color:var(--muted);font-size:13px}.stat strong{display:block;margin-top:8px;font-size:27px;color:var(--primary)}
+.panel{padding:22px;margin-bottom:20px}.panel h2{margin:0 0 18px;font-size:19px}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:700;color:#334155}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:11px 12px;font:inherit;font-size:14px;background:white;color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #176b5b18}textarea{resize:vertical;min-height:78px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}button{border:0;border-radius:8px;padding:11px 15px;cursor:pointer;font-weight:700;font-size:13px;transition:.15s}button:hover{filter:brightness(.95)}
+.btn-primary{background:var(--primary);color:white}.btn-secondary{background:#e8eef1;color:#334155}.btn-danger{background:#fee2e2;color:var(--danger)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.toolbar h2{margin:0}.search{max-width:330px}
+.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:900px;font-size:13px}th,td{padding:13px 12px;border-bottom:1px solid #e8edf0;text-align:left;vertical-align:top}
+th{background:#f7faf9;color:#475569;font-size:12px;text-transform:uppercase;letter-spacing:.3px}tbody tr:hover{background:#f8fbfa}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#d9f3e9;color:#176b5b;font-size:11px;font-weight:700}
+.row-actions{display:flex;gap:6px}.row-actions button{padding:7px 9px;font-size:12px}.empty{text-align:center;padding:28px;color:var(--muted)}.footnote{color:var(--muted);font-size:12px;margin:12px 0 0}
+.footer{text-align:center;padding:15px;font-size:14px;color:#666;background:#f8f9fa}.footer strong{color:rgb(245,32,227)}.love{display:inline-block;color:rgb(245,23,79);font-size:18px;animation:heartbeat 1s infinite}@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+#appShell[hidden],#loginScreen[hidden]{display:none!important}
+.login-screen{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#e7f4f0,#f3f6f8)}
+.login-card{width:min(100%,420px);background:white;border:1px solid var(--border);border-radius:18px;padding:30px;box-shadow:0 16px 45px #0f172a12}
+.login-logo{width:58px;height:58px;border-radius:16px;background:#d9f3e9;color:var(--primary);display:grid;place-items:center;font-size:27px;font-weight:800;margin-bottom:18px}
+.login-card h1{font-size:24px;margin:0 0 8px;color:var(--primary-dark)}.login-card p{color:var(--muted);font-size:14px;line-height:1.5;margin:0 0 22px}
+.login-card .field{margin-bottom:15px}.login-message{font-size:13px;color:var(--danger);min-height:18px;margin-top:10px}.login-hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.user-label{font-size:12px;color:#d8f3eb}
+@media(max-width:760px){.stats{grid-template-columns:1fr;gap:10px}.stat{padding:14px 17px}.stat strong{font-size:23px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.panel{padding:16px}.toolbar{align-items:stretch;flex-direction:column}.search{max-width:none}}
+@media print{body{background:white}header{padding:15px 0;background:white;color:black}header p{color:#444}main{margin:10px 0;padding:0;max-width:none}.stats,#formPanel,.toolbar .search,.toolbar .actions,.row-actions,.footnote,.top-actions{display:none!important}.panel{box-shadow:none;border:0;padding:0}table{min-width:0;font-size:10px}th,td{padding:6px}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>BARANG SAMPLE RND PT.DPP</h1>
-    <p>Administrasi dan monitoring keluar-masuk barang sample</p>
-  </header>
+<section id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <div class="login-logo"><img src="img/Dpp2.png" alt=""></div>
+    <h1>BARANG SAMPLE RND</h1>
+    <p>Silakan login untuk membuka aplikasi administrasi sample.</p>
+    <div class="field"><label for="loginId">ID Pengguna</label><input id="loginId" autocomplete="username" required placeholder="Masukkan ID pengguna"></div>
+    <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Masukkan password"></div>
+    <button class="btn-primary" type="submit" style="width:100%">Login</button>
+    <div id="loginMessage" class="login-message" role="alert"></div>
+    <div class="login-hint">Akses hanya untuk pengguna yang terdaftar pada perangkat ini. Hubungi admin jika belum memiliki akun.</div>
+  </form>
+</section>
 
-  <main>
-    <section class="stats" aria-label="Ringkasan data">
-      <div class="stat"><span>Total Data Sample</span><strong id="totalData">0</strong></div>
-      <div class="stat"><span>Total Jumlah Barang</span><strong id="totalQty">0</strong></div>
-      <div class="stat"><span>Sample Bulan ini</span><strong id="monthlyData">0</strong></div>
-    </section>
-
-    <section class="panel" id="formPanel">
-      <h2 id="formTitle">Tambah Data Sample</h2>
-      <form id="sampleForm">
-        <input type="hidden" id="editId">
-        <div class="form-grid">
-          <div class="field">
-            <label for="tanggal">Tanggal *</label>
-            <input type="date" id="tanggal" required>
-          </div>
-          <div class="field">
-            <label for="nomor">Jenis sample *</label>
-            <input id="nomor" placeholder="Contoh: Resin" required>
-          </div>
-          <div class="field">
-            <label for="kode">Supplier *</label>
-            <input id="kode" placeholder="Nama Supplier" required>
-          </div>
-          <div class="field">
-            <label for="nama">Nama Barang *</label>
-            <input id="nama" placeholder="Nama barang sample" required>
-          </div>
-          <div class="field">
-            <label for="jumlah">Jumlah *</label>
-            <input type="number" id="jumlah" min="0.1" step="0.1" placeholder="0" required>
-          </div>
-          <div class="field">
-            <label for="satuan">Satuan *</label>
-            <select id="satuan" required>
-              <option value="">Pilih satuan</option>
-              <option>Pcs</option><option>Set</option><option>Unit</option>
-              <option>Gram</option><option>Meter</option><option>Kg</option><option>Lainnya</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="pemohon">Permintaan *</label>
-            <input id="pemohon" placeholder="Nama pemohon atau departemen" required>
-          </div>
-          <div class="field">
-            <label for="status">Status *</label>
-            <select id="status" required>
-              <option>BARU</option><option>R.LAB</option><option>REJECT</option>
-              <option>HABIS</option><option>OK</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="pic">Lokasi Sample *</label>
-            <input id="pic" placeholder="Nama PIC">
-          </div>
-          <div class="field full">
-            <label for="keterangan">Keterangan</label>
-            <textarea id="keterangan" placeholder="Tujuan sample, kondisi barang, atau catatan lain"></textarea>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn-primary" type="submit" id="saveBtn">Simpan Data</button>
-          <button class="btn-secondary" type="button" id="cancelBtn" hidden>Batal Edit</button>
-          <button class="btn-secondary" type="reset" id="resetBtn">Kosongkan Form</button>
-        </div>
-      </form>
-    </section>
-
-    <section class="panel">
-      <div class="toolbar">
-        <h2>Daftar Barang Sample</h2>
-        <input class="search" id="search" type="search" placeholder="Cari nomor, supplier, nama, pemohon...">
-        <div class="actions" style="margin:0">
-          <button class="btn-secondary" type="button" id="printBtn">Cetak Laporan</button>
-        </div>
+<div id="appShell" hidden>
+<header>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div><h1>BARANG SAMPLE RND PT.DPP</h1><p>Administrasi dan monitoring keluar-masuk barang sample</p></div>
+    <div class="top-actions"><span class="user-label">Login: <strong id="currentUserLabel"></strong></span><button class="btn-secondary" id="manageUsersBtn" type="button" hidden>Kelola Akun</button><button class="btn-secondary" id="logoutBtn" type="button">Logout</button></div>
+  </div>
+</header>
+<main>
+  <section class="stats" aria-label="Ringkasan data">
+    <div class="stat"><span>Total Data Sample</span><strong id="totalData">0</strong></div>
+    <div class="stat"><span>Total Jumlah Barang</span><strong id="totalQty">0</strong></div>
+    <div class="stat"><span>Sample Bulan ini</span><strong id="monthlyData">0</strong></div>
+  </section>
+  <section class="panel" id="formPanel">
+    <h2 id="formTitle">Tambah Data Sample</h2>
+    <form id="sampleForm">
+      <input type="hidden" id="editId">
+      <div class="form-grid">
+        <div class="field"><label for="tanggal">Tanggal *</label><input type="date" id="tanggal" required></div>
+        <div class="field"><label for="nomor">Jenis sample *</label><input id="nomor" placeholder="Contoh: Resin" required></div>
+        <div class="field"><label for="kode">Supplier *</label><input id="kode" placeholder="Nama Supplier" required></div>
+        <div class="field"><label for="nama">Nama Barang *</label><input id="nama" placeholder="Nama barang sample" required></div>
+        <div class="field"><label for="jumlah">Jumlah *</label><input type="number" id="jumlah" min="0.1" step="0.1" placeholder="0" required></div>
+        <div class="field"><label for="satuan">Satuan *</label><select id="satuan" required><option value="">Pilih satuan</option><option>Pcs</option><option>Set</option><option>Unit</option><option>Gram</option><option>Meter</option><option>Kg</option><option>Lainnya</option></select></div>
+        <div class="field"><label for="pemohon">Permintaan *</label><input id="pemohon" placeholder="Nama pemohon atau departemen" required></div>
+        <div class="field"><label for="status">Status *</label><select id="status" required><option>BARU</option><option>R.LAB</option><option>REJECT</option><option>HABIS</option><option>OK</option></select></div>
+        <div class="field"><label for="pic">Lokasi Sample *</label><input id="pic" placeholder="Nama PIC" required></div>
+        <div class="field full"><label for="keterangan">Keterangan</label><textarea id="keterangan" placeholder="Tujuan sample, kondisi barang, atau catatan lain"></textarea></div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>No.</th><th>Tanggal</th><th>Sample</th><th>Supplier</th>
-              <th>Nama Barang</th><th>Jumlah</th><th>Permintaan</th><th>Status</th><th>Lokasi</th><th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-        <div class="empty" id="emptyState">Belum ada data sample. Silakan tambahkan data melalui form di atas.</div>
-      </div>
-      <p class="footnote">Data disimpan diperangkat ini saja.</p>
-    </section>
-<footer class="footer">
-    <span class="love">&hearts;</span> |
-    Created by <strong>RND DPP</strong>
-    &copy; <span id="year"></span>
-    | <span class="love">&hearts;</span>
-</footer>
+      <div class="actions"><button class="btn-primary" type="submit" id="saveBtn">Simpan Data</button><button class="btn-secondary" type="button" id="cancelBtn" hidden>Batal Edit</button><button class="btn-secondary" type="reset" id="resetBtn">Kosongkan Form</button></div>
+    </form>
+  </section>
+  <section class="panel">
+    <div class="toolbar"><h2>Daftar Barang Sample</h2><input class="search" id="search" type="search" placeholder="Cari sample, supplier, nama, pemohon..."><div class="actions" style="margin:0"><button class="btn-secondary" type="button" id="printBtn">Cetak Laporan</button></div></div>
+    <div class="table-wrap"><table><thead><tr><th>No.</th><th>Tanggal</th><th>Sample</th><th>Supplier</th><th>Nama Barang</th><th>Jumlah</th><th>Permintaan</th><th>Status</th><th>Lokasi</th><th>Aksi</th></tr></thead><tbody id="tableBody"></tbody></table><div class="empty" id="emptyState">Belum ada data sample. Silakan tambahkan data melalui form di atas.</div></div>
+    <p class="footnote">Data disimpan di perangkat/browser ini saja.</p>
+  </section>
+  <footer class="footer"><span class="love">&hearts;</span> | Created by <strong>RND DPP</strong> &copy; <span id="year"></span> | <span class="love">&hearts;</span></footer>
+</main>
+</div>
+
+<dialog id="usersDialog" style="border:1px solid #dce4e8;border-radius:14px;width:min(95%,560px);padding:22px">
+  <h2 style="margin-top:0">Kelola Akun Pengguna</h2>
+  <p style="font-size:13px;color:#64748b">Admin dapat menambah akun karyawan atau menghapus akun. Akun disimpan di browser ini.</p>
+  <form id="userForm">
+    <div class="form-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div class="field"><label for="newUserId">ID pengguna *</label><input id="newUserId" required minlength="3" autocomplete="off" placeholder="contoh: karyawan01"></div>
+      <div class="field"><label for="newUserName">Nama pengguna *</label><input id="newUserName" required placeholder="Nama karyawan"></div>
+      <div class="field"><label for="newUserPassword">Password *</label><input id="newUserPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter"></div>
+      <div class="field"><label for="newUserRole">Hak akses *</label><select id="newUserRole"><option value="karyawan">Karyawan</option><option value="admin">Admin</option></select></div>
+    </div>
+    <div class="actions"><button class="btn-primary" type="submit">Tambah Akun</button><button class="btn-secondary" type="button" id="closeUsersBtn">Tutup</button></div>
+  </form>
+  <div id="userMessage" style="font-size:13px;margin-top:10px"></div>
+  <div class="table-wrap" style="margin-top:18px"><table style="min-width:0"><thead><tr><th>ID</th><th>Nama</th><th>Hak akses</th><th>Aksi</th></tr></thead><tbody id="usersTableBody"></tbody></table></div>
+</dialog>
 
 <script>
-    document.getElementById("year").textContent =
-        new Date().getFullYear();
+"use strict";
+const STORAGE_KEY = "pencatatanBarangSample_v1";
+const USERS_KEY = "barangSampleUsers_v1";
+const SESSION_KEY = "barangSampleSession_v1";
+const $ = id => document.getElementById(id);
+const form = $("sampleForm");
+let samples = loadSamples();
+let currentUser = null;
+
+// Login sederhana sisi browser. Ini bukan pengamanan server; jangan gunakan password penting.
+function defaultUsers() {
+  return [{id:"adminrnd", name:"Admin RND", password:"DPP@2026", role:"admin"}];
+}
+function loadUsers() {
+  try {
+    const stored = localStorage.getItem(USERS_KEY);
+    if (!stored) {
+      const initial = defaultUsers();
+      localStorage.setItem(USERS_KEY, JSON.stringify(initial));
+      return initial;
+    }
+    const parsed = JSON.parse(stored);
+    return Array.isArray(parsed) && parsed.length ? parsed : defaultUsers();
+  } catch { return defaultUsers(); }
+}
+let users = loadUsers();
+function saveUsers() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+function loadSamples() {
+  try { const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); return Array.isArray(data) ? data : []; }
+  catch { return []; }
+}
+function persist() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(samples)); render(); }
+  catch { alert("Data gagal disimpan. Penyimpanan browser mungkin penuh atau dinonaktifkan."); }
+}
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function showApp(user) {
+  currentUser = user;
+  $("loginScreen").hidden = true;
+  $("appShell").hidden = false;
+  $("currentUserLabel").textContent = `${user.name} (${user.role})`;
+  $("manageUsersBtn").hidden = user.role !== "admin";
+  $("year").textContent = new Date().getFullYear();
+  render();
+}
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  currentUser = null;
+  $("appShell").hidden = true;
+  $("loginScreen").hidden = false;
+  $("loginPassword").value = "";
+  $("loginMessage").textContent = "";
+  $("loginId").focus();
+  resetForm();
+}
+$("loginForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const id = $("loginId").value.trim().toLowerCase();
+  const password = $("loginPassword").value;
+  const user = users.find(u => u.id.toLowerCase() === id && u.password === password);
+  if (!user) {
+    $("loginMessage").textContent = "ID atau password salah. Silakan coba lagi.";
+    $("loginPassword").value = "";
+    return;
+  }
+  sessionStorage.setItem(SESSION_KEY, user.id);
+  $("loginMessage").textContent = "";
+  showApp(user);
+});
+$("logoutBtn").addEventListener("click", logout);
+
+function formData() {
+  return {
+    tanggal: $("tanggal").value, nomor: $("nomor").value.trim(), kode: $("kode").value.trim(),
+    nama: $("nama").value.trim(), jumlah: Number($("jumlah").value), satuan: $("satuan").value,
+    pemohon: $("pemohon").value.trim(), status: $("status").value, pic: $("pic").value.trim(),
+    keterangan: $("keterangan").value.trim()
+  };
+}
+function resetForm() {
+  form.reset(); $("editId").value = ""; $("tanggal").value = today();
+  $("formTitle").textContent = "Tambah Data Sample"; $("saveBtn").textContent = "Simpan Data";
+  $("cancelBtn").hidden = true;
+}
+form.addEventListener("submit", event => {
+  event.preventDefault();
+  if (!currentUser) return;
+  const item = formData();
+  const editId = $("editId").value;
+  if (editId) {
+    samples = samples.map(s => s.id === editId ? {...s, ...item, diubahOleh: currentUser.id} : s);
+  } else {
+    samples.unshift({id:(crypto.randomUUID ? crypto.randomUUID() : String(Date.now())), ...item, dibuatPada:new Date().toISOString(), dibuatOleh:currentUser.id});
+  }
+  persist(); resetForm();
+});
+$("resetBtn").addEventListener("click", () => setTimeout(resetForm, 0));
+$("cancelBtn").addEventListener("click", resetForm);
+$("printBtn").addEventListener("click", () => window.print());
+$("search").addEventListener("input", render);
+
+function editSample(id) {
+  if (!currentUser) return;
+  const s = samples.find(item => item.id === id); if (!s) return;
+  $("editId").value = s.id;
+  ["tanggal","nomor","kode","nama","jumlah","satuan","pemohon","status","pic","keterangan"].forEach(key => { $(key).value = s[key] ?? ""; });
+  $("formTitle").textContent = "Edit Data Sample"; $("saveBtn").textContent = "Simpan Perubahan";
+  $("cancelBtn").hidden = false; $("formPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function deleteSample(id) {
+  const s = samples.find(item => item.id === id);
+  if (!s || !confirm(`Hapus data sample "${s.nomor}"?`)) return;
+  samples = samples.filter(item => item.id !== id); persist();
+  if ($("editId").value === id) resetForm();
+}
+function render() {
+  const q = $("search").value.trim().toLowerCase();
+  const filtered = samples.filter(s => [s.tanggal,s.nomor,s.kode,s.nama,s.pemohon,s.status,s.pic,s.keterangan].some(v => String(v || "").toLowerCase().includes(q)));
+  $("totalData").textContent = samples.length;
+  $("totalQty").textContent = samples.reduce((sum,s) => sum + Number(s.jumlah || 0),0).toLocaleString("id-ID");
+  const month = today().slice(0,7);
+  $("monthlyData").textContent = samples.filter(s => (s.tanggal || "").startsWith(month)).length;
+  $("tableBody").innerHTML = filtered.map((s,index) => `<tr>
+    <td>${index+1}</td><td>${escapeHtml(s.tanggal)}</td><td><strong>${escapeHtml(s.nomor)}</strong></td>
+    <td>${escapeHtml(s.kode)}</td><td>${escapeHtml(s.nama)}${s.keterangan ? `<br><small style="color:#64748b">${escapeHtml(s.keterangan)}</small>` : ""}</td>
+    <td>${escapeHtml(s.jumlah)} ${escapeHtml(s.satuan)}</td><td>${escapeHtml(s.pemohon)}</td>
+    <td><span class="pill">${escapeHtml(s.status)}</span></td><td>${escapeHtml(s.pic || "-")}</td>
+    <td><div class="row-actions"><button class="btn-secondary" type="button" data-edit="${escapeHtml(s.id)}">Edit</button><button class="btn-danger" type="button" data-delete="${escapeHtml(s.id)}">Hapus</button></div></td>
+  </tr>`).join("");
+  $("emptyState").hidden = filtered.length > 0;
+  if (!filtered.length) $("emptyState").textContent = q ? "Data tidak ditemukan." : "Belum ada data sample. Silakan tambahkan data melalui form di atas.";
+}
+$("tableBody").addEventListener("click", event => {
+  const editButton = event.target.closest("[data-edit]");
+  const deleteButton = event.target.closest("[data-delete]");
+  if (editButton) editSample(editButton.dataset.edit);
+  if (deleteButton) deleteSample(deleteButton.dataset.delete);
+});
+
+// Pengelolaan akun admin
+$("manageUsersBtn").addEventListener("click", () => { renderUsers(); $("usersDialog").showModal(); });
+$("closeUsersBtn").addEventListener("click", () => $("usersDialog").close());
+function renderUsers() {
+  $("usersTableBody").innerHTML = users.map(u => `<tr><td>${escapeHtml(u.id)}</td><td>${escapeHtml(u.name)}</td><td>${escapeHtml(u.role)}</td><td>${u.id === currentUser?.id ? '<small>Akun aktif</small>' : `<button type="button" class="btn-danger" data-remove-user="${escapeHtml(u.id)}">Hapus</button>`}</td></tr>`).join("");
+}
+$("usersTableBody").addEventListener("click", event => {
+  const button = event.target.closest("[data-remove-user]");
+  if (!button) return;
+  const id = button.dataset.removeUser;
+  if (id === currentUser?.id) return;
+  const target = users.find(u => u.id === id);
+  if (!target || !confirm(`Hapus akun "${target.id}"?`)) return;
+  if (target.role === "admin" && users.filter(u => u.role === "admin").length <= 1) {
+    $("userMessage").textContent = "Tidak dapat menghapus admin terakhir."; return;
+  }
+  users = users.filter(u => u.id !== id); saveUsers(); renderUsers();
+  $("userMessage").textContent = "Akun berhasil dihapus.";
+});
+$("userForm").addEventListener("submit", event => {
+  event.preventDefault();
+  if (currentUser?.role !== "admin") return;
+  const id = $("newUserId").value.trim();
+  const name = $("newUserName").value.trim();
+  const password = $("newUserPassword").value;
+  const role = $("newUserRole").value;
+  if (!/^[a-zA-Z0-9._-]{3,30}$/.test(id)) {
+    $("userMessage").textContent = "ID harus 3–30 karakter: huruf, angka, titik, garis bawah, atau tanda hubung."; return;
+  }
+  if (users.some(u => u.id.toLowerCase() === id.toLowerCase())) {
+    $("userMessage").textContent = "ID tersebut sudah digunakan."; return;
+  }
+  if (password.length < 6) {
+    $("userMessage").textContent = "Password minimal 6 karakter."; return;
+  }
+  users.push({id,name,password,role});
+  saveUsers(); renderUsers(); $("userForm").reset();
+  $("userMessage").textContent = `Akun ${id} berhasil ditambahkan.`;
+});
+
+// Pulihkan sesi selama tab/browser session masih aktif
+resetForm();
+const savedSessionId = sessionStorage.getItem(SESSION_KEY);
+const savedUser = users.find(u => u.id === savedSessionId);
+if (savedUser) showApp(savedUser);
+else { $("loginScreen").hidden = false; $("appShell").hidden = true; }
 </script>
-</script>
-  </main>
-  <script>
-
-
-    const STORAGE_KEY = "pencatatanBarangSample_v1";
-    const $ = (id) => document.getElementById(id);
-    const form = $("sampleForm");
-    let samples = loadSamples();
-
-    function loadSamples() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
-      catch { return []; }
-    }
-    function persist() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(samples));
-      render();
-    }
-    function today() {
-      const d = new Date();
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-    }
-    function escapeHtml(value) {
-      return String(value ?? "").replace(/[&<>"']/g, c => ({
-        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-      }[c]));
-    }
-    function formData() {
-      return {
-        tanggal: $("tanggal").value,
-        nomor: $("nomor").value.trim(),
-        kode: $("kode").value.trim(),
-        nama: $("nama").value.trim(),
-        jumlah: Number($("jumlah").value),
-        satuan: $("satuan").value,
-        pemohon: $("pemohon").value.trim(),
-        status: $("status").value,
-        pic: $("pic").value.trim(),
-        keterangan: $("keterangan").value.trim()
-      };
-    }
-    function resetForm() {
-      form.reset();
-      $("editId").value = "";
-      $("tanggal").value = today();
-      $("formTitle").textContent = "Tambah Data Sample";
-      $("saveBtn").textContent = "Simpan Data";
-      $("cancelBtn").hidden = true;
-    }
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const item = formData();
-      const editId = $("editId").value;
-      const duplicate = samples.some(s => s.nomor.toLowerCase() === item.nomor.toLowerCase() && s.id !== editId);
-
-      if (editId) {
-        samples = samples.map(s => s.id === editId ? { ...s, ...item } : s);
-      } else {
-        samples.unshift({ id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())), ...item, dibuatPada: new Date().toISOString() });
-      }
-      persist();
-      resetForm();
-    });
-    $("resetBtn").addEventListener("click", () => setTimeout(resetForm, 0));
-    $("cancelBtn").addEventListener("click", resetForm);
-    $("printBtn").addEventListener("click", () => window.print());
-    $("search").addEventListener("input", render);
-
-    function editSample(id) {
-      const s = samples.find(item => item.id === id);
-      if (!s) return;
-      $("editId").value = s.id;
-      ["tanggal","nomor","kode","nama","jumlah","satuan","pemohon","status","pic","keterangan"].forEach(key => {
-        $(key).value = s[key] ?? "";
-      });
-      $("formTitle").textContent = "Edit Data Sample";
-      $("saveBtn").textContent = "Simpan Perubahan";
-      $("cancelBtn").hidden = false;
-      $("formPanel").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    function deleteSample(id) {
-      const s = samples.find(item => item.id === id);
-      if (!s || !confirm(`Hapus data sample "${s.nomor}"?`)) return;
-      samples = samples.filter(item => item.id !== id);
-      persist();
-      if ($("editId").value === id) resetForm();
-    }
-    function render() {
-      const q = $("search").value.trim().toLowerCase();
-      const filtered = samples.filter(s =>
-        [s.nomor,s.kode,s.nama,s.pemohon,s.status,s.pic].some(v => String(v || "").toLowerCase().includes(q))
-      );
-      $("totalData").textContent = samples.length;
-      $("totalQty").textContent = samples.reduce((sum, s) => sum + Number(s.jumlah || 0), 0).toLocaleString("id-ID");
-      const month = today().slice(0,7);
-      $("monthlyData").textContent = samples.filter(s => (s.tanggal || "").startsWith(month)).length;
-      $("tableBody").innerHTML = filtered.map((s, index) => `
-        <tr>
-          <td>${index+1}</td>
-          <td>${escapeHtml(s.tanggal)}</td>
-          <td><strong>${escapeHtml(s.nomor)}</strong></td>
-          <td>${escapeHtml(s.kode)}</td>
-          <td>${escapeHtml(s.nama)}${s.keterangan ? `<br><small style="color:#64748b">${escapeHtml(s.keterangan)}</small>` : ""}</td>
-          <td>${escapeHtml(s.jumlah)} ${escapeHtml(s.satuan)}</td>
-          <td>${escapeHtml(s.pemohon)}</td>
-          <td><span class="pill">${escapeHtml(s.status)}</span></td>
-          <td>${escapeHtml(s.pic || "-")}</td>
-          <td><div class="row-actions">
-            <button class="btn-secondary" type="button" data-edit="${escapeHtml(s.id)}">Edit</button>
-            <button class="btn-danger" type="button" data-delete="${escapeHtml(s.id)}">Hapus</button>
-          </div></td>
-        </tr>`).join("");
-      $("emptyState").hidden = filtered.length > 0;
-      if (!filtered.length) $("emptyState").textContent = q ? "Data tidak ditemukan." : "Belum ada data sample. Silakan tambahkan data melalui form di atas.";
-    }
-    $("tableBody").addEventListener("click", (event) => {
-      const editButton = event.target.closest("[data-edit]");
-      const deleteButton = event.target.closest("[data-delete]");
-      if (editButton) editSample(editButton.dataset.edit);
-      if (deleteButton) deleteSample(deleteButton.dataset.delete);
-    });
-    resetForm();
-    render();
-  </script>
 </body>
 </html>
+'''
+path = Path("/mnt/data/barang_sample_rnd_login.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created: {path}")
